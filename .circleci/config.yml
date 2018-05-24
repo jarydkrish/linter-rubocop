@@ -1,0 +1,18 @@
+version: 2
+
+shared: &shared
+  working_directory: ~/linter-rubocop
+  steps:
+    - checkout
+    - run: gem --version
+    - run: gem install rubocop --no-document
+    - run: rubocop --version
+    - run: curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
+    - run: chmod u+x build-package.sh
+    - run: ./build-package.sh
+
+jobs:
+  "ruby-2.3.1":
+    <<: *shared
+    docker:
+      - image: circleci/ruby:2.3.1
